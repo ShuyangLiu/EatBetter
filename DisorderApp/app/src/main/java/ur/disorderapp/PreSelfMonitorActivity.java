@@ -28,13 +28,15 @@ public class PreSelfMonitorActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+        }
 
         sCollection = Collection.get(getApplicationContext());
 
@@ -43,14 +45,16 @@ public class PreSelfMonitorActivity extends AppCompatActivity
 
         //Cancel button navigates back to main activity
         Button cancel = (Button) findViewById(R.id.pre_self_monitor_btn_2);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
+        if (cancel != null) {
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                }
+            });
+        }
 
         GoalStatus status = sCollection.checkStatus("sugar");
 
@@ -65,40 +69,50 @@ public class PreSelfMonitorActivity extends AppCompatActivity
                         "you can start it again or go back to main menu";
             }
 
-            instruction.setText(msg);
+            if (instruction != null) {
+                instruction.setText(msg);
+            }
 
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    start_self_monitor();
-                }
-            });
+            if (btn != null) {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        start_self_monitor();
+                    }
+                });
+            }
         } else if (status == GoalStatus.SELFMONITORING){
             String msg = "It seems you have already started the self-monitoring\n"+
                     "You need to continue the assessments until it is finished\n" +
                     "Click on the ok button to continue";
-            instruction.setText(msg);
+            if (instruction != null) {
+                instruction.setText(msg);
+            }
 
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    continue_self_monitor();
-                }
-            });
+            if (btn != null) {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        continue_self_monitor();
+                    }
+                });
+            }
         } else if (status == GoalStatus.ACTIVATED) {
             String msg = "It seems you have already started the program\n"+
                     "Click on the ok button to continue";
-            instruction.setText(msg);
+            if (instruction != null) {
+                instruction.setText(msg);
+            }
 
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    continue_program();
-                }
-            });
+            if (btn != null) {
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        continue_program();
+                    }
+                });
+            }
         }
-
-
     }
 
     public void start_self_monitor()

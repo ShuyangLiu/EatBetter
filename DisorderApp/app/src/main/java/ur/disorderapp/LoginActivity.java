@@ -1,6 +1,7 @@
 package ur.disorderapp;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +13,7 @@ import ur.disorderapp.model.Collection;
 
 public class LoginActivity extends AppCompatActivity
 {
-    private Button mLoginBtn, mRegisterBtn;
     private EditText mUsername, mPassword;
-
     private Collection sCollection;
 
     @Override
@@ -25,11 +24,16 @@ public class LoginActivity extends AppCompatActivity
 
         sCollection = Collection.get(this.getApplicationContext());
 
-        mLoginBtn       = (Button) findViewById(R.id.login_btn);
-        mRegisterBtn    = (Button) findViewById(R.id.login_btn_register);
+        Button mLoginBtn = (Button) findViewById(R.id.login_btn);
         mUsername       = (EditText) findViewById(R.id.login_username_hint);
         mPassword       = (EditText) findViewById(R.id.login_password_hint);
 
+        mUsername.setTypeface(Typeface.createFromAsset(getApplicationContext()
+                .getAssets(),"font/Raleway-Light.ttf"));
+        mPassword.setTypeface(Typeface.createFromAsset(getApplicationContext()
+                .getAssets(),"font/Raleway-Light.ttf"));
+
+        assert mLoginBtn != null;
         mLoginBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -48,7 +52,8 @@ public class LoginActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_SHORT)
+                    Toast.makeText(getApplicationContext(),
+                            "Incorrect username or password", Toast.LENGTH_SHORT)
                             .show();
                     mUsername.setText("");
                     mPassword.setText("");
@@ -57,17 +62,12 @@ public class LoginActivity extends AppCompatActivity
             }
         });
 
-        mRegisterBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //add new account to the local database
-                //lead to a register screen
-            }
-        });
+    }
 
-
-
+    @Override
+    protected void onUserLeaveHint ()
+    {
+        super.onUserLeaveHint();
+        this.finishAffinity();
     }
 }

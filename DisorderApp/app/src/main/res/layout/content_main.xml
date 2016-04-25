@@ -6,6 +6,7 @@
 
     android:layout_width    ="match_parent"
     android:layout_height   ="match_parent"
+    android:background      ="#252931"
 
     app:layout_behavior     ="@string/appbar_scrolling_view_behavior"
 
@@ -16,7 +17,38 @@
         android:id              ="@+id/drawer_layout"
         android:layout_width    ="match_parent"
         android:layout_height   ="match_parent"
-        android:orientation     ="vertical">
+        android:orientation     ="vertical"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width        ="match_parent"
+            android:layout_height       ="wrap_content"
+            android:layout_weight       ="0.5"
+            android:orientation         ="horizontal">
+
+            <Button
+                android:id              ="@+id/main_btn_sugar"
+                android:layout_width    ="50dp"
+                android:layout_height   ="wrap_content"
+                android:layout_weight   ="1"
+                android:text="@string/main_btn_sugar"
+                android:textSize="20sp"
+                android:layout_margin   ="5dp"
+                android:background      ="#da4343"
+
+                />
+
+            <Button
+                android:id              ="@+id/main_btn_exercise"
+                android:layout_width    ="50dp"
+                android:layout_height   ="wrap_content"
+                android:layout_weight   ="1"
+                android:text            ="@string/main_btn_exercise"
+                android:layout_margin   ="5dp"
+                android:background      ="#64a7ea"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width        ="match_parent"
@@ -24,48 +56,91 @@
             android:layout_weight       ="1"
             android:orientation         ="horizontal">
 
-            <Button
-                android:id              ="@+id/main_btn_sugar"
-                android:layout_width    ="0dp"
-                android:layout_height   ="match_parent"
-                android:layout_weight   ="1"
-                android:text            ="@string/main_btn_sugar"
-                android:layout_margin   ="5dp"
-                android:background      ="#ADC0D8"/>
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:layout_width                ="0dp"
+                android:layout_height               ="match_parent"
+                app:background_progressbar_color    ="#cdf3ff"
+                app:background_progressbar_width    ="2dp"
+                app:progressbar_color               ="#ff0077"
+                app:progressbar_width               ="8dp"
+                android:layout_margin               ="15dp"
+                android:layout_weight               ="1"
+                android:id                          ="@+id/main_progress_sugar"
+                />
 
-            <Button
-                android:id              ="@+id/main_btn_exercise"
-                android:layout_width    ="0dp"
-                android:layout_height   ="match_parent"
-                android:layout_weight   ="1"
-                android:text            ="@string/main_btn_exercise"
-                android:layout_margin   ="5dp"
-                android:background      ="#EA8F64"/>
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:layout_width                ="0dp"
+                android:layout_height               ="match_parent"
+                app:background_progressbar_color    ="#cdf3ff"
+                app:background_progressbar_width    ="2dp"
+                app:progressbar_color               ="#ff0077"
+                app:progressbar_width               ="8dp"
+                android:layout_margin               ="15dp"
+                android:layout_weight               ="1"
+                android:id                          ="@+id/main_progress_exercise"
+                />
+
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width        ="match_parent"
             android:layout_height       ="wrap_content"
-            android:layout_weight       ="1"
-            android:orientation         ="horizontal">
+            android:layout_weight       ="0.5"
+            android:orientation         ="horizontal"
+            android:layout_margin="5dp">
+
             <Button
                 android:id              ="@+id/main_btn_sleep"
-                android:layout_width    ="0dp"
-                android:layout_height   ="match_parent"
+                android:layout_width    ="50dp"
+                android:layout_height   ="wrap_content"
                 android:layout_weight   ="1"
                 android:text            ="@string/main_btn_sleep"
-                android:background      ="#F8ED96"
-                android:layout_margin   ="5dp"/>
+                android:background      ="#ffff00"
+                android:layout_margin   ="10dp"
+                android:textSize="20sp"
+                />
 
             <Button
                 android:id              ="@+id/main_btn_other"
-                android:layout_width    ="0dp"
-                android:layout_height   ="match_parent"
+                android:layout_width    ="50dp"
+                android:layout_height   ="wrap_content"
                 android:layout_weight   ="1"
                 android:text            ="@string/main_btn_other"
-                android:layout_margin   ="5dp"
-                android:background      ="#cf66b3"/>
+                android:layout_margin   ="10dp"
+                android:background      ="#ff4400"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight       ="1"
+            android:orientation         ="horizontal">
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:layout_width                ="0dp"
+                android:layout_height               ="match_parent"
+                app:background_progressbar_color    ="#cdf3ff"
+                app:background_progressbar_width    ="2dp"
+                app:progressbar_color               ="#ff0077"
+                app:progressbar_width               ="8dp"
+                android:layout_margin="15dp"
+                android:layout_weight   ="1"
+                />
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:layout_width                ="0dp"
+                android:layout_height               ="match_parent"
+                app:background_progressbar_color    ="#cdf3ff"
+                app:background_progressbar_width    ="2dp"
+                app:progressbar_color               ="#ff0077"
+                app:progressbar_width               ="8dp"
+                android:layout_margin="15dp"
+                android:layout_weight   ="1"
+                />
+
         </LinearLayout>
 
     </LinearLayout>

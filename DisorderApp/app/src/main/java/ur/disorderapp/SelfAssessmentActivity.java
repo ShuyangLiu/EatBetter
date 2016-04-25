@@ -1,27 +1,23 @@
 package ur.disorderapp;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.telephony.TelephonyManager;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.firebase.client.Firebase;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.HashMap;
@@ -32,7 +28,6 @@ import ur.disorderapp.EnumValues.Situation;
 import ur.disorderapp.EnumValues.TimePeriod;
 import ur.disorderapp.model.Collection;
 import ur.disorderapp.model.DataPiece;
-import ur.disorderapp.model.FirebaseData;
 import ur.disorderapp.model.SelfAssessmentData;
 
 public class SelfAssessmentActivity extends AppCompatActivity
@@ -74,6 +69,7 @@ public class SelfAssessmentActivity extends AppCompatActivity
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -87,40 +83,54 @@ public class SelfAssessmentActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        if (drawer != null) {
+            drawer.setDrawerListener(toggle);
+        }
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
 
         //Setting up progress bar
         sCollection = Collection.get(getApplicationContext());
         int progress = sCollection.checkProgress("sugar");
-        View headerView = navigationView.getHeaderView(0);
+        View headerView = null;
+        if (navigationView != null) {
+            headerView = navigationView.getHeaderView(0);
+        }
         CircularProgressBar sugarProgress =
-                (CircularProgressBar) headerView.findViewById(R.id.sugar_progress);
+                null;
+        if (headerView != null) {
+            sugarProgress = (CircularProgressBar) headerView.findViewById(R.id.sugar_progress);
+        }
         // 2500ms = 2.5s
         int animationDuration = 5000;
         // Default duration = 1500ms
-        sugarProgress.setProgressWithAnimation(progress, animationDuration);
+        if (sugarProgress != null) {
+            sugarProgress.setProgressWithAnimation(progress, animationDuration);
+        }
     }
 
     @Override
     public void onBackPressed()
     {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START))
-        {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            if (mPager.getCurrentItem() == 0)
+        if (drawer != null) {
+            if (drawer.isDrawerOpen(GravityCompat.START))
             {
-                // If the user is currently looking at the first page, allow the system to handle the
-                // Back button. This calls finish() on this activity and pops the back stack.
-                super.onBackPressed();
+                drawer.closeDrawer(GravityCompat.START);
             } else {
-                // Otherwise, select the previous step.
-                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+                if (mPager.getCurrentItem() == 0)
+                {
+                    // If the user is currently looking at the first page, allow the system to handle the
+                    // Back button. This calls finish() on this activity and pops the back stack.
+                    super.onBackPressed();
+                } else {
+                    // Otherwise, select the previous step.
+                    mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+                }
             }
         }
     }
@@ -169,7 +179,9 @@ public class SelfAssessmentActivity extends AppCompatActivity
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
         return true;
     }
 
@@ -219,18 +231,14 @@ public class SelfAssessmentActivity extends AppCompatActivity
         @Override
         public android.support.v4.app.Fragment getItem(int position)
         {
-
-            if(position==6)
-            {
+            if(position==6) {
                 //return the new fragment
                 SlideFragment_submit f = new SlideFragment_submit();
                 return f;
             }
 
             //otherwise
-            SlideFragment fragment = SlideFragment.newInstance(position);
-
-            return fragment;
+            return SlideFragment.newInstance(position);
         }
 
         @Override

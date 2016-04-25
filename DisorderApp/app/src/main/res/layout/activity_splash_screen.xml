@@ -9,7 +9,7 @@
     android:paddingLeft     = "@dimen/activity_horizontal_margin"
     android:paddingRight    = "@dimen/activity_horizontal_margin"
     android:paddingTop      = "@dimen/activity_vertical_margin"
-    android:background      = "#313131"
+    android:background      = "#ffffff"
 
     tools:context           = "ur.disorderapp.SplashScreenActivity">
 
@@ -18,8 +18,9 @@
         android:layout_height           = "wrap_content"
         android:layout_marginBottom     = "10dp"
         android:textSize                = "20sp"
-        android:textColor               = "#18ffba"
+        android:textColor               = "#383838"
         android:gravity                 = "center_horizontal"
-        android:text                    = "@string/splash_screen_text" />
+        android:text                    = "@string/splash_screen_text"
+        android:id="@+id/splash_text"/>
 
 </RelativeLayout>

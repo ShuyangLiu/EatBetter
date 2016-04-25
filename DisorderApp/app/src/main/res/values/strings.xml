@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">DisorderApp</string>
     <string name="title_activity_sugar_mod">SugarModActivity</string>
-    <string name="main_btn_sugar">Sugar Module</string>
-    <string name="main_btn_exercise">Exercise Module</string>
-    <string name="main_btn_sleep">Sleep Module</string>
+    <string name="main_btn_sugar">Sugar</string>
+    <string name="main_btn_exercise">Exercise</string>
+    <string name="main_btn_sleep">Sleep</string>
     <string name="main_btn_other">Others</string>
-    <string name="sugar_title">Sugar Module Tasks</string>
+    <string name="sugar_title">Tasks</string>
     <string name="sugar_soda">Soda</string>
     <string name="sugar_breakfast">Breakfast Pastries</string>
     <string name="sugar_snacks">Sweet Snacks</string>
@@ -23,12 +23,10 @@
     <string name="login_password_hint">Please enter your password</string>
     <string name="login_btn">Log in</string>
     <string name="login_register">Register</string>
-    <string name="splash_screen_text">This is a splash screen, Logo here</string>
+    <string name="splash_screen_text">WELCOME</string>
     <string name="title_activity_pre_self_monitor">PreSelfMonitorActivity</string>
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
     <string name="submit_text">Are you sure you want to submit this record?</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

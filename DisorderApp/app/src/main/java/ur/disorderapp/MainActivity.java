@@ -3,6 +3,7 @@ package ur.disorderapp;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity
             });
         }
 
+
+        //Setting up Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
         }
 
+
+
         //Setting up progress bar
         int progress = sCollection.checkProgress("sugar");
         View headerView = null;
@@ -79,7 +84,8 @@ public class MainActivity extends AppCompatActivity
         }
         CircularProgressBar sugarProgress = null;
         if (headerView != null) {
-            sugarProgress = (CircularProgressBar) headerView.findViewById(R.id.sugar_progress);
+            sugarProgress =
+                    (CircularProgressBar) headerView.findViewById(R.id.sugar_progress);
         }
         // 2500ms = 2.5s
         int animationDuration = 5000;
@@ -88,35 +94,58 @@ public class MainActivity extends AppCompatActivity
             sugarProgress.setProgressWithAnimation(progress, animationDuration);
         }
 
+        CircularProgressBar main_sugarProgress =
+                (CircularProgressBar) findViewById(R.id.main_progress_sugar);
+        if (main_sugarProgress != null) {
+            main_sugarProgress.setProgressWithAnimation(progress, animationDuration);
+        }
 
-        //Sugar Program
+        //Buttons
         Button sugarModule = (Button) findViewById(R.id.main_btn_sugar);
-        assert sugarModule != null;
-        sugarModule.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
+        Button exercise = (Button) findViewById(R.id.main_btn_exercise);
+        Button sleep = (Button) findViewById(R.id.main_btn_sleep);
+        Button other = (Button) findViewById(R.id.main_btn_other);
+
+        //Font
+        if (sugarModule != null) {
+            sugarModule.setTypeface(Typeface.createFromAsset(getApplicationContext()
+                    .getAssets(),"font/Raleway-Light.ttf"));
+        }
+        if (exercise != null) {
+            exercise.setTypeface(Typeface.createFromAsset(getApplicationContext()
+                    .getAssets(),"font/Raleway-Light.ttf"));
+        }
+        if (sleep != null) {
+            sleep.setTypeface(Typeface.createFromAsset(getApplicationContext()
+                    .getAssets(),"font/Raleway-Light.ttf"));
+        }
+        if (other != null) {
+            other.setTypeface(Typeface.createFromAsset(getApplicationContext()
+                    .getAssets(),"font/Raleway-Light.ttf"));
+        }
+
+        if (sugarModule != null) {
+            sugarModule.setOnClickListener(new View.OnClickListener()
             {
-
-                /*querying from database first to check the program status,
-                 if it is the first time the user start the program,
-                 navigate to self-monitoring first to finish the survey
-                 (check goal status)*/
-
-                GoalStatus s = sCollection.checkStatus("sugar");
-                Intent i;
-                //Start a new one
-                if(s==GoalStatus.UNACTIVATED || s==GoalStatus.SELFMONITORING)
+                @Override
+                public void onClick(View v)
                 {
-                    i = new Intent(getApplicationContext(), PreSelfMonitorActivity.class);
+
+                    GoalStatus s = sCollection.checkStatus("sugar");
+                    Intent i;
+                    //Start a new one
+                    if(s==GoalStatus.UNACTIVATED || s==GoalStatus.SELFMONITORING)
+                    {
+                        i = new Intent(getApplicationContext(), PreSelfMonitorActivity.class);
+                    }
+                    //Or Continue
+                    else {
+                        i = new Intent(getApplicationContext(), SugarProgramActivity.class);
+                    }
+                    startActivity(i);
                 }
-                //Or Continue
-                else {
-                    i = new Intent(getApplicationContext(), SugarProgramActivity.class);
-                }
-                startActivity(i);
-            }
-        });
+            });
+        }
 
         //If there is no service running right now, start the service
         if (!isMyServiceRunning(DataSendingService.class)){
