@@ -5,6 +5,7 @@ public enum Location
     HOME,
     WORK,
     ON_THE_GO,
-    OTHER
+    OTHER,
+    NULL
 
 }

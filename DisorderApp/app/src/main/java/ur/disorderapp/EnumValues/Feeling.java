@@ -6,5 +6,6 @@ public enum Feeling
     HUNGARY,
     THIRSTY,
     EXHAUSTED,
-    OTHER
+    OTHER,
+    NULL
 }

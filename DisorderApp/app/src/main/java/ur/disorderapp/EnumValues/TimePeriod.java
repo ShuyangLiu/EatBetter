@@ -7,6 +7,7 @@ public enum TimePeriod
     MORNING,
     NOON,
     NIGHT,
-    OTHER
+    OTHER,
+    NULL
 
 }

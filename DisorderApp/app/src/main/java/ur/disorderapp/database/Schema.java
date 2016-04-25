@@ -41,12 +41,6 @@ public class Schema
         }
     }
 
-    //a table that is going to store the data temporarily if no internet connection
-//    public static final class Buffer
-//    {
-//
-//    }
-
     //A table record the user's living habits taken from their self-monitoring results
     public static final class HabitTable
     {

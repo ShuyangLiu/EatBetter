@@ -11,29 +11,29 @@ public class FirebaseData
     String mSituation;
     String mFeeling;
 
-    public String getFood() {
-        return mFood;
-    }
-
-    public int getAmount() {
-        return mAmount;
-    }
-
-    public String getTimePeriod() {
-        return mTime;
-    }
-
-    public String getLocation() {
-        return mLocation;
-    }
-
-    public String getSituation() {
-        return mSituation;
-    }
-
-    public String getFeeling() {
-        return mFeeling;
-    }
+//    public String getFood() {
+//        return mFood;
+//    }
+//
+//    public int getAmount() {
+//        return mAmount;
+//    }
+//
+//    public String getTimePeriod() {
+//        return mTime;
+//    }
+//
+//    public String getLocation() {
+//        return mLocation;
+//    }
+//
+//    public String getSituation() {
+//        return mSituation;
+//    }
+//
+//    public String getFeeling() {
+//        return mFeeling;
+//    }
 
     String mDate;
 

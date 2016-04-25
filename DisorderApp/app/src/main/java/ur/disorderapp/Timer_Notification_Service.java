@@ -10,16 +10,25 @@ import android.os.Handler;
 import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
+import ur.disorderapp.EnumValues.Feeling;
+import ur.disorderapp.EnumValues.Location;
+import ur.disorderapp.EnumValues.Situation;
+import ur.disorderapp.EnumValues.TimePeriod;
+import ur.disorderapp.model.Collection;
+import ur.disorderapp.model.SelfAssessmentData;
+
 public class Timer_Notification_Service extends IntentService {
 
     public Timer_Notification_Service() {
         super("Timer_Notification_Service");
     }
+    public static Collection sCollection;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         Toast.makeText(this, "timer starting", Toast.LENGTH_SHORT).show();
+        sCollection = Collection.get(getApplicationContext());
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -71,6 +80,20 @@ public class Timer_Notification_Service extends IntentService {
                             //Toast.makeText(getApplicationContext(), "Timer Stopped", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+                    Thread.sleep(30000);//wait 30 seconds for response
+
+                    //sent empty data
+                    //Note: it will never get to here if the user responded to the notification and report new data
+                    //Because every time the user sends a set of data, this service will be restarted
+                    //which means it will re-entering the loop
+
+                    SelfAssessmentData data =
+                            new SelfAssessmentData("NULL",0,
+                                    TimePeriod.NULL, Location.NULL, Situation.NULL,
+                                    Feeling.NULL,1);
+
+                    sCollection.addSelfAssessmentData(data);
                 }
 
             } catch (InterruptedException e) {
