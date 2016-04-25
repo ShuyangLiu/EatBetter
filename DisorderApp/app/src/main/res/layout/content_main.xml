@@ -18,7 +18,7 @@
         android:layout_width    ="match_parent"
         android:layout_height   ="match_parent"
         android:orientation     ="vertical"
-        android:layout_margin="5dp">
+        android:layout_margin   ="5dp">
 
         <LinearLayout
             android:layout_width        ="match_parent"
@@ -31,8 +31,8 @@
                 android:layout_width    ="50dp"
                 android:layout_height   ="wrap_content"
                 android:layout_weight   ="1"
-                android:text="@string/main_btn_sugar"
-                android:textSize="20sp"
+                android:text            ="@string/main_btn_sugar"
+                android:textSize        ="20sp"
                 android:layout_margin   ="5dp"
                 android:background      ="#da4343"
 
@@ -46,7 +46,7 @@
                 android:text            ="@string/main_btn_exercise"
                 android:layout_margin   ="5dp"
                 android:background      ="#64a7ea"
-                android:textSize="20sp"
+                android:textSize        ="20sp"
                 />
         </LinearLayout>
 
@@ -88,7 +88,7 @@
             android:layout_height       ="wrap_content"
             android:layout_weight       ="0.5"
             android:orientation         ="horizontal"
-            android:layout_margin="5dp">
+            android:layout_margin       ="5dp">
 
             <Button
                 android:id              ="@+id/main_btn_sleep"
@@ -98,7 +98,7 @@
                 android:text            ="@string/main_btn_sleep"
                 android:background      ="#ffff00"
                 android:layout_margin   ="10dp"
-                android:textSize="20sp"
+                android:textSize        ="20sp"
                 />
 
             <Button
@@ -109,13 +109,13 @@
                 android:text            ="@string/main_btn_other"
                 android:layout_margin   ="10dp"
                 android:background      ="#ff4400"
-                android:textSize="20sp"
+                android:textSize        ="20sp"
                 />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width        ="match_parent"
+            android:layout_height       ="wrap_content"
             android:layout_weight       ="1"
             android:orientation         ="horizontal">
 
@@ -126,8 +126,8 @@
                 app:background_progressbar_width    ="2dp"
                 app:progressbar_color               ="#ff0077"
                 app:progressbar_width               ="8dp"
-                android:layout_margin="15dp"
-                android:layout_weight   ="1"
+                android:layout_margin               ="15dp"
+                android:layout_weight               ="1"
                 />
 
             <com.mikhaellopez.circularprogressbar.CircularProgressBar
@@ -137,8 +137,8 @@
                 app:background_progressbar_width    ="2dp"
                 app:progressbar_color               ="#ff0077"
                 app:progressbar_width               ="8dp"
-                android:layout_margin="15dp"
-                android:layout_weight   ="1"
+                android:layout_margin               ="15dp"
+                android:layout_weight               ="1"
                 />
 
         </LinearLayout>

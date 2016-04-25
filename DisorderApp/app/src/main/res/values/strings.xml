@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DisorderApp</string>
+    <string name="app_name">EatBetter</string>
     <string name="title_activity_sugar_mod">SugarModActivity</string>
     <string name="main_btn_sugar">Sugar</string>
     <string name="main_btn_exercise">Exercise</string>
