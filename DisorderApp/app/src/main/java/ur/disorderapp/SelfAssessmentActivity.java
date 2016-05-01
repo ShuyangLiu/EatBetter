@@ -55,7 +55,7 @@ public class SelfAssessmentActivity extends AppCompatActivity
         mPager = (ViewPager) findViewById(R.id.view_pager);
 
 
-        //Initialize the Hashmap
+        //Initialize the HashMap
         hashMap = new HashMap<>();
 
         /*
