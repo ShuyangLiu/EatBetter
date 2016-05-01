@@ -65,7 +65,7 @@ public class PreSelfMonitorActivity extends AppCompatActivity
                         "You need to finish the self-assessment before you can start\n" +
                         "(And some other instructions about self-assessment here)";
             } else {
-                msg = "It seems you have done this program before\n" +
+                msg = "It seems you have finished this program before\n" +
                         "you can start it again or go back to main menu";
             }
 
@@ -81,10 +81,19 @@ public class PreSelfMonitorActivity extends AppCompatActivity
                     }
                 });
             }
-        } else if (status == GoalStatus.SELFMONITORING){
-            String msg = "It seems you have already started the self-monitoring\n"+
-                    "You need to continue the assessments until it is finished\n" +
-                    "Click on the ok button to continue";
+        } else if (status == GoalStatus.SELFMONITORING ||
+                status == GoalStatus.ACTIVATED){
+            String msg = "";
+            if (status == GoalStatus.SELFMONITORING) {
+                msg = "It seems you have already started the self-monitoring\n" +
+                        "You need to continue the assessments until it is finished\n" +
+                        "Click on the ok button to continue";
+            } else {
+                msg = "The Record shows that you already finished the first stage of self-monitoring\n"+
+                "You need to continue self-monitor you daily eating " +
+                        "behaviors while trying to change them according to suggestions\n"+
+                        "Click on the ok button to continue";
+            }
             if (instruction != null) {
                 instruction.setText(msg);
             }
@@ -97,27 +106,13 @@ public class PreSelfMonitorActivity extends AppCompatActivity
                     }
                 });
             }
-        } else if (status == GoalStatus.ACTIVATED) {
-            String msg = "It seems you have already started the program\n"+
-                    "Click on the ok button to continue";
-            if (instruction != null) {
-                instruction.setText(msg);
-            }
-
-            if (btn != null) {
-                btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        continue_program();
-                    }
-                });
-            }
         }
+
     }
 
     public void start_self_monitor()
     {
-        //Update Goal status and progress
+        //Update Goal status and progress++, set the progress as 10%
         Goal goal = new Goal(10,GoalStatus.SELFMONITORING,"sugar");
         sCollection.updateGoal(goal);
         //Go to self assessment activity
@@ -129,13 +124,6 @@ public class PreSelfMonitorActivity extends AppCompatActivity
     {
         //Go to self assessment activity
         Intent i = new Intent(this,SelfAssessmentActivity.class);
-        startActivity(i);
-    }
-
-    public void continue_program()
-    {
-        //Go to self assessment activity
-        Intent i = new Intent(this,SugarProgramActivity.class);
         startActivity(i);
     }
 

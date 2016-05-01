@@ -5,12 +5,12 @@ import ur.disorderapp.EnumValues.GoalStatus;
 
 public class Goal
 {
-    private int progress;//the percentage of the progress
+    private double progress;//the percentage of the progress
     private GoalStatus status;
     private String name;
 
 
-    public Goal(int progress, GoalStatus status, String name)
+    public Goal(double progress, GoalStatus status, String name)
     {
         this.progress = progress;
         this.status = status;
@@ -25,7 +25,7 @@ public class Goal
                 '}';
     }
 
-    public int getProgress() {
+    public double getProgress() {
         return progress;
     }
 

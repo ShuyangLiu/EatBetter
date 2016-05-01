@@ -10,62 +10,23 @@
     tools:context               ="ur.disorderapp.SugarProgramActivity"
     tools:showIn                ="@layout/app_bar_sugar_program">
 
-    <LinearLayout
-        android:layout_width        ="match_parent"
-        android:layout_height       ="match_parent"
-        android:orientation         ="vertical">
-        <LinearLayout
-            android:layout_width    ="match_parent"
-            android:layout_height   ="wrap_content"
-            android:layout_weight   ="1"
-            android:orientation     ="horizontal">
-            <Button
-                android:id              ="@+id/sugar_btn_soda"
-                android:layout_width    ="0dp"
-                android:layout_height   ="match_parent"
-                android:layout_weight   ="1"
-                android:text            ="@string/sugar_soda"
-                android:background      ="#ADC0D8"
-                android:layout_margin   ="5dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
+        android:text="@string/congratulation_title"
+        android:id="@+id/sugar_program_text_title"
+        android:layout_margin="20dp"/>
 
-            <Button
-                android:id              ="@+id/sugar_btn_breakfast"
-                android:layout_width    ="0dp"
-                android:layout_height   ="match_parent"
-                android:layout_weight   ="1"
-                android:text            ="@string/sugar_breakfast"
-                android:background      ="#EA8F64"
-                android:layout_margin   ="5dp"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width        ="match_parent"
-            android:layout_height       ="wrap_content"
-            android:layout_weight       ="1"
-            android:orientation         ="horizontal">
-
-            <Button
-                android:id              ="@+id/sugar_btn_snacks"
-                android:layout_width    ="0dp"
-                android:layout_height   ="match_parent"
-                android:layout_weight   ="1"
-                android:text            ="SELF ASSESSMENT TEST"
-                android:background      ="#F8ED96"
-                android:layout_margin   ="5dp"/>
-
-            <Button
-                android:id              ="@+id/sugar_btn_other"
-                android:layout_width    ="0dp"
-                android:layout_height   ="match_parent"
-                android:layout_weight   ="1"
-                android:text            ="@string/main_btn_other"
-                android:background      ="#cf66b3"
-                android:layout_margin   ="5dp"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/btn_continue"
+        android:layout_below="@id/sugar_program_text_title"
+        android:layout_marginTop="30dp"
+        android:id="@+id/sugar_program_btn"
+        android:layout_margin="10dp"/>
 
 </RelativeLayout>

@@ -7,6 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
+    private static final String SQL_DELETE_ENTRIES_GoalTable =
+            "DROP TABLE IF EXISTS " + Schema.GoalTable.NAME;
+    private static final String SQL_DELETE_ENTRIES_HabitTable =
+            "DROP TABLE IF EXISTS " + Schema.HabitTable.NAME;
+    private static final String SQL_DELETE_ENTRIES_GoalAverage =
+            "DROP TABLE IF EXISTS " + Schema.ProgramTable.NAME;
+    private static final String SQL_DELETE_ENTRIES_AccountTable =
+            "DROP TABLE IF EXISTS " + Schema.AccountTable.NAME;
 
     public DatabaseHelper(Context context)
     {
@@ -36,6 +44,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
                         + Schema.HabitTable.Cols.DATE + ")"
         );
 
+        db.execSQL("create table " + Schema.ProgramTable.NAME
+                + "(_id integer primary key autoincrement, "
+                + Schema.ProgramTable.Cols.SUGARINTAKE + ", "
+                + Schema.ProgramTable.Cols.FRUIT + ")"
+        );
+
         db.execSQL("create table " + Schema.AccountTable.NAME
                         + "(_id integer primary key autoincrement, "
                         + Schema.AccountTable.Cols.UID + ", "
@@ -46,6 +60,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
+        db.execSQL(SQL_DELETE_ENTRIES_GoalTable);
+        db.execSQL(SQL_DELETE_ENTRIES_AccountTable);
+        db.execSQL(SQL_DELETE_ENTRIES_GoalAverage);
+        db.execSQL(SQL_DELETE_ENTRIES_HabitTable);
 
+        onCreate(db);
     }
 }

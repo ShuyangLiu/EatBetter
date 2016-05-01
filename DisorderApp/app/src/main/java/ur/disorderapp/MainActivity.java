@@ -74,10 +74,9 @@ public class MainActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
         }
 
-
-
         //Setting up progress bar
-        int progress = sCollection.checkProgress("sugar");
+        double progress = sCollection.checkProgress("sugar");
+
         View headerView = null;
         if (navigationView != null) {
             headerView = navigationView.getHeaderView(0);
@@ -91,13 +90,13 @@ public class MainActivity extends AppCompatActivity
         int animationDuration = 5000;
         // Default duration = 1500ms
         if (sugarProgress != null) {
-            sugarProgress.setProgressWithAnimation(progress, animationDuration);
+            sugarProgress.setProgressWithAnimation((float) progress, animationDuration);
         }
 
         CircularProgressBar main_sugarProgress =
                 (CircularProgressBar) findViewById(R.id.main_progress_sugar);
         if (main_sugarProgress != null) {
-            main_sugarProgress.setProgressWithAnimation(progress, animationDuration);
+            main_sugarProgress.setProgressWithAnimation((float) progress, animationDuration);
         }
 
         //Buttons
@@ -132,16 +131,24 @@ public class MainActivity extends AppCompatActivity
                 {
 
                     GoalStatus s = sCollection.checkStatus("sugar");
+
                     Intent i;
                     //Start a new one
-                    if(s==GoalStatus.UNACTIVATED || s==GoalStatus.SELFMONITORING)
+                    if(s==GoalStatus.UNACTIVATED ||
+                            s==GoalStatus.SELFMONITORING ||
+                            s==GoalStatus.ACTIVATED ||
+                            s==GoalStatus.FINISHED)
                     {
-                        i = new Intent(getApplicationContext(), PreSelfMonitorActivity.class);
+                        i = new Intent(getApplicationContext(),
+                                PreSelfMonitorActivity.class);
                     }
-                    //Or Continue
+                    //Feedback and congratulation page
+                    // status == PREACTIVATED || PREFINISHED
                     else {
-                        i = new Intent(getApplicationContext(), SugarProgramActivity.class);
+                        i = new Intent(getApplicationContext(),
+                                SugarProgramActivity.class);
                     }
+
                     startActivity(i);
                 }
             });

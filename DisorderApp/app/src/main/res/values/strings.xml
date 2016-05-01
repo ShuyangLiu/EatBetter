@@ -30,4 +30,6 @@
     <string name="submit_text">Are you sure you want to submit this record?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="form_submit">SUBMIT</string>
+    <string name="congratulation_title">CONGRATULATION!</string>
+    <string name="btn_continue">Continue</string>
 </resources>

@@ -48,10 +48,10 @@ public class Timer_Notification_Service extends IntentService {
                                     (NotificationCompat.Builder)
                                             new NotificationCompat.Builder(getApplicationContext())
                                                     .setSmallIcon(R.drawable.ic_menu_send)
-                                                    .setContentTitle("My notification")
-                                                    .setContentText("My notification");
+                                                    .setContentTitle("Reminder")
+                                                    .setContentText("Don't forget to report every time you eat something!");
 
-                            // Creates an explicit intent for an Activity in your app
+                            // Creates an explicit intent for an Activity in the app
                             Intent resultIntent = new Intent(getBaseContext(), MainActivity.class);
 
                             // The stack builder object will contain an artificial back stack for the

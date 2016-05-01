@@ -3,7 +3,7 @@ package ur.disorderapp.database;
 public class Schema
 {
 
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
     public static final String DATABASE_NAME = "database.db";
 
     public Schema()
@@ -38,6 +38,19 @@ public class Schema
             public static final String UID = "uid";
 
             public static final String PASSWORD = "password";
+        }
+    }
+
+    //A table for sugar program
+    public static final class ProgramTable
+    {
+        public static final String NAME = "sugar_program";
+
+        public static final class Cols
+        {
+            public static final String SUGARINTAKE = "sugar_intake";
+
+            public static final String FRUIT = "fruit";
         }
     }
 

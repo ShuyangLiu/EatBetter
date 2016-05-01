@@ -72,10 +72,10 @@ public class SlideFragment extends Fragment
         //Set the content of fragments
         if (position==0){
             //Food Name
-            text_0 = "Sugary Drinks";
+            text_0 = "Candy_Bar";
             text_1 = "Donuts";
             text_2 = "Soda";
-            text_3 = "Other";
+            text_3 = "Fruit";
         } else if (position==1) {
             //How many
             text_0 = "1";
@@ -107,26 +107,6 @@ public class SlideFragment extends Fragment
             text_2 = "WORK_MEAL";
             text_3 = "OTHER";
         }
-//        else if (position==6) {
-//            LayoutInflater vi = (LayoutInflater) getContext()
-//                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            View v = vi.inflate(R.layout.fragment_submit, null);
-//
-//            rootView.addView(v, 0,
-//                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
-//                            ViewGroup.LayoutParams.FILL_PARENT));
-//
-//            Button btn = (Button) v.findViewById(R.id.submit_ok);
-//            btn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-//
-//            return rootView;
-//
-//        }
 
         btn_0.setText(text_0);
         btn_1.setText(text_1);

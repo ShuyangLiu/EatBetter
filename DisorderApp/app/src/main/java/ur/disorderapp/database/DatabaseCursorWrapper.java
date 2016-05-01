@@ -21,7 +21,7 @@ public class DatabaseCursorWrapper extends CursorWrapper
 
     public Goal getGoal()
     {
-        int progress = getInt(getColumnIndex(Schema.GoalTable.Cols.PROGRESS));
+        double progress = getDouble(getColumnIndex(Schema.GoalTable.Cols.PROGRESS));
         GoalStatus status = GoalStatus.valueOf(
                 getString(
                         getColumnIndex(
@@ -32,12 +32,23 @@ public class DatabaseCursorWrapper extends CursorWrapper
         return new Goal(progress, status, name);
     }
 
+
+    public double getProgramAmount_sugar()
+    {
+        return getDouble(getColumnIndex(Schema.ProgramTable.Cols.SUGARINTAKE));
+    }
+    public double getProgramAmount_fruit()
+    {
+        return getDouble(getColumnIndex(Schema.ProgramTable.Cols.FRUIT));
+    }
+
+
+
     public String getPassword()
     {
         try {
             return getString(getColumnIndex(Schema.AccountTable.Cols.PASSWORD));
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             return null;
         }
 

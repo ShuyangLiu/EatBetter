@@ -23,11 +23,13 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import java.util.HashMap;
 
 import ur.disorderapp.EnumValues.Feeling;
+import ur.disorderapp.EnumValues.GoalStatus;
 import ur.disorderapp.EnumValues.Location;
 import ur.disorderapp.EnumValues.Situation;
 import ur.disorderapp.EnumValues.TimePeriod;
 import ur.disorderapp.model.Collection;
 import ur.disorderapp.model.DataPiece;
+import ur.disorderapp.model.Goal;
 import ur.disorderapp.model.SelfAssessmentData;
 
 public class SelfAssessmentActivity extends AppCompatActivity
@@ -36,14 +38,10 @@ public class SelfAssessmentActivity extends AppCompatActivity
                     SlideFragment_submit.OnDataPass_submit
 {
     private ViewPager mPager;
-
     public static Collection sCollection;
-
-    /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
+    private static final int SELF_ASSESSMENT_END = 20;
+    private static final int SELF_MONITOR_PROGRESS = 2;
     private static final int NUM_PAGES = 7;
-
     private HashMap<Integer,String> hashMap;
 
     @Override
@@ -95,7 +93,7 @@ public class SelfAssessmentActivity extends AppCompatActivity
 
         //Setting up progress bar
         sCollection = Collection.get(getApplicationContext());
-        int progress = sCollection.checkProgress("sugar");
+        double progress = sCollection.checkProgress("sugar");
         View headerView = null;
         if (navigationView != null) {
             headerView = navigationView.getHeaderView(0);
@@ -109,7 +107,7 @@ public class SelfAssessmentActivity extends AppCompatActivity
         int animationDuration = 5000;
         // Default duration = 1500ms
         if (sugarProgress != null) {
-            sugarProgress.setProgressWithAnimation(progress, animationDuration);
+            sugarProgress.setProgressWithAnimation((float) progress, animationDuration);
         }
     }
 
@@ -185,6 +183,7 @@ public class SelfAssessmentActivity extends AppCompatActivity
         return true;
     }
 
+    //Pass data to the map
     @Override
     public void onDataPass(DataPiece data)
     {
@@ -212,15 +211,107 @@ public class SelfAssessmentActivity extends AppCompatActivity
             //Save data to database
             sCollection.addSelfAssessmentData(data);
 
+            double currentProgress = sCollection.checkProgress("sugar");
+            GoalStatus status = sCollection.checkStatus("sugar");
+
+            if (status == GoalStatus.SELFMONITORING ||
+                    status == GoalStatus.UNACTIVATED) {
+
+                currentProgress+=SELF_MONITOR_PROGRESS;
+
+                if (currentProgress>=SELF_ASSESSMENT_END) {
+                    status = GoalStatus.PREACTIVATED;
+                    //Enter the 1st row of ProgramTable here
+                    //Calculate Average
+                    double sugar_intake = calculateAverage_sugar();
+                    double fruit_intake = calculateAverage_fruit();
+                    sCollection.addSugarProgramData(sugar_intake,fruit_intake);
+                }
+
+            } else if (status == GoalStatus.ACTIVATED){
+
+                if (data.getFood().equals("Fruit")) {
+                    double amount = (double)data.getAmount();
+                    sCollection.addSugarProgramData(0.0,amount);
+                } else {
+                    double amount = (double)data.getAmount();
+                    sCollection.addSugarProgramData(amount,0.0);
+                }
+                currentProgress = calculateProgress();
+            }
+
+            //Check if the goal is accomplished
+            if (currentProgress==100.0)
+            {
+                status = GoalStatus.PREFINISHED;
+            }
+
+            Goal goal = new Goal(currentProgress,status,"sugar");
+            sCollection.updateGoal(goal);
+
+            //Restart Notification Timer
             stopService(new Intent(this, Timer_Notification_Service.class));
             startService(new Intent(this, Timer_Notification_Service.class));
 
+            //Go to Main Activity
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
 
+    private double calculateAverage_fruit()
+    {
+        double fruit_intake = sCollection.getAmountSum("Fruit");
+        double times = (double) sCollection.getTotalRowNum_SelfAssessment();
+        return (fruit_intake / times);
+    }
+
+    private double calculateAverage_sugar()
+    {
+        double donut_intake = sCollection.getAmountSum("Donut");
+        double soda_intake = sCollection.getAmountSum("Soda");
+        double candybar_intake = sCollection.getAmountSum("Candy_Bar");
+        double total = donut_intake+soda_intake+candybar_intake;
+        double times = (double) sCollection.getTotalRowNum_SelfAssessment();
+        return (total / times);
+    }
+
+    private double calculateProgress()
+    {
+        double sugar_sum = sCollection.getSum_sugar_intake();
+        double fruit_sum = sCollection.getSum_fruit_intake();
+        double rows = sCollection.getTotalRowNum_SugarProgram();
+
+        double sugar_average = sugar_sum / rows;
+        double fruit_average = fruit_sum / rows;
+
+        double first_row_sugar = sCollection.getFirstSugarProgramRow_sugar();
+        double first_row_fruit = sCollection.getFirstSugarProgramRow_fruit();
+
+        double goal_sugar = first_row_sugar / 7.0;
+        double goal_fruit = (first_row_fruit + 7.0)/8.0;
+
+        double sugar_progress = (goal_sugar / sugar_average)*0.4;
+        double fruit_progress = (goal_fruit / fruit_average)*0.4;
+
+        //Set Upper Bound
+        if ((sugar_progress + fruit_progress + 0.2) >= 1.0)
+        {
+            if (sugar_progress<0.4) {
+                fruit_progress = 0.4;
+            } else if (fruit_progress<0.4) {
+                sugar_progress = 0.4;
+            } else {
+                fruit_progress = 0.4;
+                sugar_progress = 0.4;
+            }
+        }
+
+        return (sugar_progress + fruit_progress + 0.2)*100;
+    }
+
+    //ViewPager Adapter
     private class viewpagerAdapter extends FragmentStatePagerAdapter
     {
         public viewpagerAdapter(FragmentManager fm)
@@ -248,6 +339,7 @@ public class SelfAssessmentActivity extends AppCompatActivity
         }
     }
 
+    //Animated Transition for slides
     private class ZoomOutPageTransformer implements ViewPager.PageTransformer
     {
         private static final float MIN_SCALE = 0.85f;
@@ -289,6 +381,7 @@ public class SelfAssessmentActivity extends AppCompatActivity
         }
     }
 
+    //Callback Method dealing with task stack
     @Override
     protected void onUserLeaveHint ()
     {

@@ -23,29 +23,19 @@ import ur.disorderapp.database.Schema;
 public class Collection
 {
 
-    private int assessmentCounter;
-
     private static Collection sCollection;
-    //private Map<String, Goal> Goal_collection;
-    //private Map<String, SelfAssessmentData> SelfAssessmentData_collection;
-    private Map<String,String> Account_collection;
     private final SQLiteDatabase Database;
 
     public Collection(Context appContext)//Constructor
     {
         Context appContext1 = appContext.getApplicationContext();
-        assessmentCounter = 0;
-        //Goal_collection = new HashMap<>();
-        //SelfAssessmentData_collection = new HashMap<>();
-        Account_collection = new HashMap<>();
         Database = new DatabaseHelper(appContext1).getWritableDatabase();
 
-        //Initialize goal table
+        //Initialize goal table for demo
         this.addGoal(new Goal(0, GoalStatus.UNACTIVATED, "sugar"));
-        this.addGoal(new Goal(0, GoalStatus.UNACTIVATED, "sleep"));
 
         //Add an account for demo
-        this.addAccount("root","1234567890");
+        this.addAccount("aaa","aaa");
 
     }
 
@@ -65,6 +55,17 @@ public class Collection
 
         values.put(Schema.AccountTable.Cols.UID, uid);
         values.put(Schema.AccountTable.Cols.PASSWORD, pw);
+
+        return values;
+    }
+
+    private static ContentValues getContentValues_SugarProgram(double sugar_intake,
+                                                               double fruit)
+    {
+        ContentValues values = new ContentValues();
+
+        values.put(Schema.ProgramTable.Cols.SUGARINTAKE,sugar_intake);
+        values.put(Schema.ProgramTable.Cols.FRUIT,fruit);
 
         return values;
     }
@@ -95,15 +96,18 @@ public class Collection
     public void addSelfAssessmentData(SelfAssessmentData data) {
         ContentValues values = getContentValues_selfMonitoringData(data);
         Database.insert(Schema.HabitTable.NAME, null, values);
-        //SelfAssessmentData_collection.put(Integer.toString(assessmentCounter), data);
-        assessmentCounter++;
     }
 
     public void addAccount(String uid, String pw)
     {
         ContentValues values = getContentValues_account(uid, pw);
         Database.insert(Schema.AccountTable.NAME, null, values);
-        Account_collection.put(uid,pw);
+    }
+
+    public void addSugarProgramData(double sugar_intake, double fruit)
+    {
+        ContentValues values = getContentValues_SugarProgram(sugar_intake,fruit);
+        Database.insert(Schema.ProgramTable.NAME,null,values);
     }
 
     //Updating goal status / progress using the name of the goal
@@ -163,6 +167,13 @@ public class Collection
         return new DatabaseCursorWrapper(cursor);
     }
 
+    private DatabaseCursorWrapper queryProgramData(String where, String[] args)
+    {
+        Cursor cursor = Database.query(Schema.ProgramTable.NAME,
+                null,where,args,null,null,null);
+        return new DatabaseCursorWrapper(cursor);
+    }
+
     // returns the current status of the goal of given name
     public GoalStatus checkStatus(String name)
     {
@@ -183,10 +194,10 @@ public class Collection
         return status;
     }
     // returns the current progress of the goal of given name
-    public int checkProgress(String name)
+    public double checkProgress(String name)
     {
 
-        int progress = 0;
+        double progress = 0;
 
         try(DatabaseCursorWrapper wrapper = queryGoal("NAME=?", new String[]{name}))
         {
@@ -200,6 +211,86 @@ public class Collection
         }
 
         return progress;
+    }
+
+    public Goal getGoal(String name)
+    {
+        try(DatabaseCursorWrapper wrapper = queryGoal("NAME=?", new String[]{name}))
+        {
+            wrapper.moveToFirst();
+            return wrapper.getGoal();
+        }
+    }
+
+    //Return the total number of intake of certain food
+    public int getAmountSum(String food)
+    {
+        int sum = 0;
+
+        try(DatabaseCursorWrapper wrapper = querySelfAssessmentData
+                ("FOOD=?", new String[]{food}))
+        {
+            wrapper.moveToFirst();
+
+            while (!wrapper.isAfterLast()) {
+                SelfAssessmentData data = wrapper.getSelfAssessmentData();
+                sum += data.getAmount();
+                wrapper.moveToNext();
+            }
+        }
+
+        return sum;
+    }
+
+    public double getSum_sugar_intake()
+    {
+        double sum = 0.0;
+
+        try(DatabaseCursorWrapper wrapper = queryProgramData(null, null))
+        {
+            wrapper.moveToFirst();
+
+            while (!wrapper.isAfterLast()) {
+                sum += wrapper.getProgramAmount_sugar();
+                wrapper.moveToNext();
+            }
+        }
+
+        return sum;
+    }
+    public double getSum_fruit_intake()
+    {
+        double sum = 0.0;
+
+        try(DatabaseCursorWrapper wrapper = queryProgramData(null, null))
+        {
+            wrapper.moveToFirst();
+
+            while (!wrapper.isAfterLast()) {
+                sum += wrapper.getProgramAmount_fruit();
+                wrapper.moveToNext();
+            }
+        }
+
+        return sum;
+    }
+
+    public double getFirstSugarProgramRow_sugar()
+    {
+        try(DatabaseCursorWrapper wrapper = queryProgramData(null, null))
+        {
+            wrapper.moveToFirst();
+            return wrapper.getProgramAmount_sugar();
+        }
+    }
+
+    public double getFirstSugarProgramRow_fruit()
+    {
+        try(DatabaseCursorWrapper wrapper = queryProgramData(null, null))
+        {
+            wrapper.moveToFirst();
+            return wrapper.getProgramAmount_fruit();
+        }
     }
 
     //return true if the password matches uid
@@ -234,12 +325,44 @@ public class Collection
         return list;
     }
 
+    //return row number of non-empty data
+    public int getTotalRowNum_SelfAssessment()
+    {
+        int sum = 0;
+
+        try (DatabaseCursorWrapper wrapper = querySelfAssessmentData("NOT FOOD=?",
+                new String[]{"NULL"})) {
+            wrapper.moveToFirst();
+            while (!wrapper.isAfterLast()) {
+                sum++;
+                wrapper.moveToNext();
+            }
+        }
+        return sum;
+    }
+
+    public int getTotalRowNum_SugarProgram()
+    {
+        int sum = 0;
+
+        try (DatabaseCursorWrapper wrapper = queryProgramData(null, null)) {
+            wrapper.moveToFirst();
+            while (!wrapper.isAfterLast()) {
+                sum++;
+                wrapper.moveToNext();
+            }
+        }
+
+        return sum;
+    }
+
     //return a list of unsent data
     public List<SelfAssessmentData> getUnsentSelfAssessmentData()
     {
         List<SelfAssessmentData> list = new ArrayList<>();
 
-        try (DatabaseCursorWrapper wrapper = querySelfAssessmentData("SENT=?", new String[]{"0"})) {
+        try (DatabaseCursorWrapper wrapper = querySelfAssessmentData("SENT=?",
+                new String[]{"0"})) {
             wrapper.moveToFirst();
             while (!wrapper.isAfterLast()) {
                 SelfAssessmentData data = wrapper.getSelfAssessmentData();
