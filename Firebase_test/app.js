@@ -5,10 +5,10 @@
 
 var Firebase    = require("firebase");
 var fs          = require('fs');
-var UserRootRef = new Firebase("https://brilliant-torch-1224.firebaseio.com/Users");
+var UserRootRef = new Firebase("https://brilliant-torch-1224.firebaseio.com/SelfMonitorData/15555215554");
 
 /*The csv data to be exported*/
-var CSV         = "date_of_birth,full_name\n";
+var CSV         = "date,amount,feeling,food,location,accompaniment,time_period,phone\n";
 
 /*
  * Setting data
@@ -34,15 +34,21 @@ var CSV         = "date_of_birth,full_name\n";
 /*reading data, a callback function*/
 UserRootRef.on("child_added", function(snapshot, prevChildKey)
 {
-    var u     = snapshot.val();;
-    var date  = u.date_of_birth;
-    var name  = u.full_name;
+    var u     = snapshot.val();
 
-    var row   = date +','+name;
+    var date  = u.date;
+    var amount  = u.mAmount;
+    var feeling = u.mFeeling;
+    var food = u.mFood;
+    var location = u.mLocation;
+    var accompaniment = u.mSituation;
+    var time_period = u.mTime;
+    var phone = u.phoneNumber;
+
+    var row   = date +','+amount+','+feeling+','+food+','+location+','+accompaniment+','+time_period+','+phone;
     CSV      += row+"\n";
 
     console.log('date: '+date);
-    console.log('name: '+name);
     console.log("\n\n");
 
     /*write to data.csv file*/
