@@ -193,10 +193,13 @@ public class MainActivity extends AppCompatActivity
                                 PreSelfMonitorActivity.class);
                     }
                     //Feedback and congratulation page
-                    // status == PREACTIVATED || PREFINISHED
-                    else {
+                    // status == PREACTIVATED
+                    else if(s == GoalStatus.PREACTIVATED) {
                         i = new Intent(getApplicationContext(),
                                 SugarProgramActivity.class);
+                    } else {
+                        i = new Intent(getApplicationContext(),
+                                GoalFinished.class);
                     }
 
                     startActivity(i);

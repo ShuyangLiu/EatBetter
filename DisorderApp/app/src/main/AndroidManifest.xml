@@ -68,6 +68,7 @@
             android:name=".Timer_Notification_Service"
             android:exported="false" />
 
+        <activity android:name=".GoalFinished"></activity>
     </application>
 
 </manifest>
