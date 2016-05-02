@@ -3,7 +3,12 @@ package ur.disorderapp;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -13,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +26,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+
+import java.io.IOException;
 
 import ur.disorderapp.EnumValues.GoalStatus;
 import ur.disorderapp.model.Collection;
@@ -35,6 +43,38 @@ public class MainActivity extends AppCompatActivity
 {
 
     private Collection sCollection;
+    //public Audio mAudio;
+    public MediaPlayer mPlayer;
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        //mAudio.release();
+        mPlayer.release();
+        mPlayer = null;
+    }
+
+    private void play()
+    {
+        try
+        {
+            AssetManager assets = getApplicationContext().getAssets();
+            AssetFileDescriptor afd = assets.openFd("sound/main.mp3");
+            if(mPlayer.isPlaying()) {
+                mPlayer.stop();
+            }
+            mPlayer.reset();
+            mPlayer.setDataSource(afd.getFileDescriptor(),
+                    afd.getStartOffset(), afd.getLength());
+            afd.close();
+            mPlayer.prepare();
+        }
+        catch(IOException ioe) {
+            Log.e("TAG", "Failed to play music: " + "sound/main.mp3");
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,17 +84,27 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Audio
+        mPlayer = new MediaPlayer();
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        mPlayer.setOnPreparedListener(
+                new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mPlayer.start();
+                    }
+                });
+
         //Initialize the database collection
         sCollection = Collection.get(this.getApplicationContext());
 
-        //TODO: add sound when button clicked (SoundPool)
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    play();
                 }
             });
         }
