@@ -1,32 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+<ScrollView
     xmlns:android       ="http://schemas.android.com/apk/res/android"
     xmlns:app           ="http://schemas.android.com/apk/res-auto"
     xmlns:tools         ="http://schemas.android.com/tools"
 
-    android:layout_width        ="match_parent"
-    android:layout_height       ="match_parent"
-    app:layout_behavior         ="@string/appbar_scrolling_view_behavior"
     tools:context               ="ur.disorderapp.SugarProgramActivity"
-    tools:showIn                ="@layout/app_bar_sugar_program">
+    tools:showIn                ="@layout/app_bar_sugar_program"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="30sp"
-        android:text="@string/congratulation_title"
-        android:id="@+id/sugar_program_text_title"
-        android:layout_margin="20dp"/>
+    android:layout_width        ="match_parent"
+    android:layout_height       ="match_parent">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/btn_continue"
-        android:layout_below="@id/sugar_program_text_title"
-        android:layout_marginTop="30dp"
-        android:id="@+id/sugar_program_btn"
-        android:layout_margin="10dp"/>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width      ="match_parent"
+        android:layout_height     ="wrap_content"
+        android:layout_marginTop  ="60dp"
+        android:orientation       ="vertical"
+        app:layout_behavior       ="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="@string/congratulation_title"
+            android:id="@+id/sugar_program_text_title"
+            android:layout_margin="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sugar_program_congratulation_text"
+            android:text="@string/sugar_program_congratulation_text"
+            android:layout_margin="20dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_donut_average"
+                android:text="@string/sugar_program_donut_average"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_donut_average_img"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_soda_average"
+                android:text="@string/sugar_program_soda_average"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_soda_average_img"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_candy_bar_average"
+                android:text="@string/sugar_program_candy_bar_average"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_candy_bar_average_img"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_fruit_average"
+                android:text="@string/sugar_program_fruit_average"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_fruit_average_img"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_time_period"
+                android:text="@string/sugar_program_time_period"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_time_period_img"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_accompany"
+                android:text="You usually eat with: "/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sugar_program_accompany_img"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:id="@+id/sugar_program_suggestion"
+            android:text="@string/sugar_program_suggestion"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:id="@+id/sugar_program_suggestion_content"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="@string/btn_continue"
+            android:textSize="20sp"
+            android:id="@+id/sugar_program_btn"
+            android:layout_margin="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:textSize="30sp"
+            android:id="@+id/sugar_program_suggestion_good_luck"
+            android:text="@string/sugar_program_good_luck"
+            />
+
+
+    </LinearLayout>
+
+</ScrollView>

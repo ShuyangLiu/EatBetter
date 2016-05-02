@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import ur.disorderapp.EnumValues.GoalStatus;
+import ur.disorderapp.EnumValues.Situation;
+import ur.disorderapp.EnumValues.TimePeriod;
 import ur.disorderapp.database.DatabaseCursorWrapper;
 import ur.disorderapp.database.DatabaseHelper;
 import ur.disorderapp.database.Schema;
@@ -235,6 +238,7 @@ public class Collection
             while (!wrapper.isAfterLast()) {
                 SelfAssessmentData data = wrapper.getSelfAssessmentData();
                 sum += data.getAmount();
+                Log.d("TTT",food+"::amount::"+data.getAmount());
                 wrapper.moveToNext();
             }
         }
@@ -371,6 +375,90 @@ public class Collection
             }
         }
         return list;
+    }
+
+    public Situation getMaxAccompany()
+    {
+        Situation result = Situation.OTHER;
+
+        int family_count = 0;
+        int colleague_count = 0;
+        int alone_count = 0;
+
+        try (DatabaseCursorWrapper wrapper = querySelfAssessmentData(null, null)) {
+            wrapper.moveToFirst();
+            while (!wrapper.isAfterLast()) {
+                SelfAssessmentData data = wrapper.getSelfAssessmentData();
+                if (data.getSituation()==Situation.FAMILY) {
+                    family_count++;
+                } else if (data.getSituation()==Situation.COLLEAGUE){
+                    colleague_count++;
+                } else if (data.getSituation()==Situation.ALONE){
+                    alone_count++;
+                }
+                wrapper.moveToNext();
+            }
+        }
+
+        //compare
+        if (family_count>colleague_count){
+            if (family_count>alone_count){
+                result = Situation.FAMILY;
+            } else {
+               result = Situation.ALONE;
+            }
+        } else {
+            if (colleague_count>alone_count){
+                result = Situation.COLLEAGUE;
+            } else {
+                result = Situation.ALONE;
+            }
+        }
+
+        return result;
+
+
+    }
+
+    public TimePeriod getMaxTimePeriod()
+    {
+        TimePeriod time = TimePeriod.OTHER;
+
+        int morning = 0;
+        int noon = 0;
+        int night = 0;
+
+        try (DatabaseCursorWrapper wrapper = querySelfAssessmentData(null, null)) {
+            wrapper.moveToFirst();
+            while (!wrapper.isAfterLast()) {
+                SelfAssessmentData data = wrapper.getSelfAssessmentData();
+                if (data.getTime()==TimePeriod.MORNING) {
+                    morning++;
+                } else if (data.getTime()==TimePeriod.NOON){
+                    noon++;
+                } else if (data.getTime()==TimePeriod.NIGHT){
+                    night++;
+                }
+                wrapper.moveToNext();
+            }
+        }
+
+        //compare
+        if (morning>noon){
+            if (morning>night){
+                time = TimePeriod.MORNING;
+            } else {
+                time = TimePeriod.NIGHT;
+            }
+        } else {
+            if (noon>night){
+                time = TimePeriod.NOON;
+            } else {
+                time = TimePeriod.NIGHT;
+            }
+        }
+
+        return time;
     }
 
 

@@ -88,12 +88,12 @@ public class Timer_Notification_Service extends IntentService {
                     //Because every time the user sends a set of data, this service will be restarted
                     //which means it will re-entering the loop
 
-                    SelfAssessmentData data =
-                            new SelfAssessmentData("NULL",0,
-                                    TimePeriod.NULL, Location.NULL, Situation.NULL,
-                                    Feeling.NULL,1);
-
-                    sCollection.addSelfAssessmentData(data);
+//                    SelfAssessmentData data =
+//                            new SelfAssessmentData("NULL",0,
+//                                    TimePeriod.NULL, Location.NULL, Situation.NULL,
+//                                    Feeling.NULL,1);
+//
+//                    sCollection.addSelfAssessmentData(data);
                 }
 
             } catch (InterruptedException e) {

@@ -109,6 +109,8 @@ public class SelfAssessmentActivity extends AppCompatActivity
         if (sugarProgress != null) {
             sugarProgress.setProgressWithAnimation((float) progress, animationDuration);
         }
+
+
     }
 
     @Override

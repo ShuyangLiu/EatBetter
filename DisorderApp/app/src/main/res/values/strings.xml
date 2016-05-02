@@ -32,4 +32,12 @@
     <string name="form_submit">SUBMIT</string>
     <string name="congratulation_title">CONGRATULATION!</string>
     <string name="btn_continue">Continue</string>
+    <string name="sugar_program_congratulation_text">Great! You are seeing this page because you just finished self-monitor section of this program! You will be continuing self-monitor as you proceed in this program. However, this page will give you some suggestions and help you improve your eating behaviors easier. Please take a look at this page and good luck!</string>
+    <string name="sugar_program_donut_average">Average daily intake of donuts:</string>
+    <string name="sugar_program_soda_average">Average daily intake of soda:</string>
+    <string name="sugar_program_candy_bar_average">Average daily intake of candy bars:</string>
+    <string name="sugar_program_fruit_average">Average daily intake of fruit:</string>
+    <string name="sugar_program_time_period">You usually eat most during:</string>
+    <string name="sugar_program_suggestion">Here are some suggestions:</string>
+    <string name="sugar_program_good_luck">Good Luck!</string>
 </resources>
