@@ -1,5 +1,13 @@
-# DisorderApp
+# EatBetter
 ---
+## Description
+#### What is this?
+* EatBetter is a mobile app running on Android platform that keep track of user's eating behaviors and gives them suggestions based on self-monitoring data
+* Designed specially for users who have difficulties reading texts on mobile phones
+* Use audio and images to help users comprehend the meaning of this app
+* Independent Study Project, Spring 2016
+
+
 ## Important Before You Merge
 * __Please `pull` first every time before you want to make some changes by running `git pull` in order to keep your project files up to date__
 
@@ -10,9 +18,9 @@
 * __Please fix any conflicts before push to Github__
 
 ## TODO List
-* ~~__Add SQLite Database and models for storing local changes and progress__~~
+* ~~Add SQLite Database and models for storing local changes and progress~~
 * ~~Add the feature of sending data to Firebase~~
 * ~~Add more specific self-monitoring functionalities~~
-* __Obviously, use pictures and icons instead of words__
-* __Add sound clips for voice fab__
-* __More acivities pages__
+* ~~Obviously, use pictures and icons instead of words~~
+* ~~Add sound clips for voice fab~~
+* ~~More acivities pages~~
